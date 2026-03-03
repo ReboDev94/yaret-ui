@@ -9,7 +9,7 @@
   "contributors": [],
   "repository": {
     "type": "git",
-    "url": "https://github.com/ReboDev94/yaret-ui.git"
+    "url": "git+https://github.com/ReboDev94/yaret-ui.git"
   },
   "keywords": [
     "react",
