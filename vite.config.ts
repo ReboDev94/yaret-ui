@@ -5,12 +5,9 @@ import dts from 'vite-plugin-dts';
 import tailwindcss from 'tailwindcss';
 import svgr from 'vite-plugin-svgr';
 import { visualizer } from 'rollup-plugin-visualizer';
-import { extname, relative, resolve } from 'path';
-import { fileURLToPath } from 'node:url';
-import { glob } from 'glob';
+import { resolve } from 'path';
 import { libInjectCss } from 'vite-plugin-lib-inject-css';
 
-// https://vitejs.dev/config/
 export default defineConfig({
   css: {
     postcss: {
@@ -18,56 +15,27 @@ export default defineConfig({
     },
   },
   build: {
-    cssCodeSplit: true,
-    copyPublicDir: false,
     lib: {
       entry: resolve(__dirname, './lib/index.ts'),
-      formats: ['es'],
+      formats: ['es', 'cjs'],
       name: 'yaret-ui',
-      // fileName: format => `index.${format}.js`,
+      fileName: format => `index.${format}.js`,
     },
     rollupOptions: {
-      external: [
-        'react',
-        'react-dom',
-        'react/jsx-runtime',
-        'tailwindcss',
-        'tailwind-merge',
-      ],
-      input: Object.fromEntries(
-        glob
-          .sync('lib/**/*.{ts,tsx}', {
-            ignore: [
-              'lib/**/*.d.ts',
-              'lib/**/*.stories.ts',
-              'lib/**/*.stories.tsx',
-              'lib/**/*.test.tsx',
-            ],
-          })
-          .map(file => [
-            // The name of the entry point
-            // lib/nested/foo.ts becomes nested/foo
-            relative('lib', file.slice(0, file.length - extname(file).length)),
-            // The absolute path to the entry file
-            // lib/nested/foo.ts becomes /project/lib/nested/foo.ts
-            fileURLToPath(new URL(file, import.meta.url)),
-          ]),
-      ),
+      external: ['react', 'react-dom', 'react/jsx-runtime'],
       output: {
-        inlineDynamicImports: false,
-        assetFileNames: 'assets/[name][extname]',
-        entryFileNames: '[name].js',
         globals: {
           react: 'React',
           'react-dom': 'ReactDOM',
           'react/jsx-runtime': 'react/jsx-runtime',
-          tailwindcss: 'tailwindcss',
-          'tailwind-merge': 'tailwindMerge',
         },
+        assetFileNames: 'assets/[name][extname]',
       },
     },
     sourcemap: true,
+    cssCodeSplit: true,
     emptyOutDir: true,
+    copyPublicDir: false,
   },
   plugins: [
     react(),
@@ -79,7 +47,6 @@ export default defineConfig({
       exclude: ['**/*.stories.ts', '**/*.stories.tsx', '**/*.test.tsx'],
     }),
   ],
-
   test: {
     globals: true,
     environment: 'jsdom',
