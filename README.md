@@ -42,14 +42,14 @@ function App() {
 
 ```css
 :root {
-  --color-primary: 45 85 155;
-  --color-secondary: 139 58 98;
-  --color-success: 50 168 82;
-  --color-error: 231 76 60;
-  --color-warning: 253 203 88;
-  --color-info: 52 152 219;
-  --color-light: 245 245 245;
-  --color-dark: 2 6 23;
+    --yaret-ui-color-primary: 0 75 135;
+    --yaret-ui-color-secondary: 124 82 149;
+    --yaret-ui-color-success: 75 149 96;
+    --yaret-ui-color-error: 224 79 57;
+    --yaret-ui-color-warning: 244 195 0;
+    --yaret-ui-color-info: 155 184 211;
+    --yaret-ui-color-light: 227 232 241;
+    --yaret-ui-color-dark: 39 54 59;
 }
 ```
 
